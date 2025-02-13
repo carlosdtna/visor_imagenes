@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor de Imágenes</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        img {
+            width: 300px;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .hidden {
+            display: none;
+        }
+        .large {
+            transform: scale(1.5);
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="imageContainer">
+        <img src="imagenes/buzz.jpg" alt="Imagen 1" id="img1" onclick="selectImage('img1')">
+        <img src="imagenes/eBoy.jpg" alt="Imagen 2" id="img2" onclick="selectImage('img2')">
+    </div>
+    <div class="controls hidden" id="controls">
+        <button onclick="changePerspective('front')">Frontal</button>
+        <button onclick="changePerspective('side')">Lateral</button>
+        <button onclick="reset()">Restablecer</button>
+    </div>
+    <script>
+        let selectedImage = null;
+        function selectImage(id) {
+            selectedImage = document.getElementById(id);
+            let otherImage = id === 'img1' ? document.getElementById('img2') : document.getElementById('img1');
+            otherImage.classList.add('hidden');
+            selectedImage.classList.add('large');
+            document.getElementById('controls').classList.remove('hidden');
+        }
+        function changePerspective(perspective) {
+            if (selectedImage) {
+                selectedImage.src = `${selectedImage.id}_${perspective}.jpg`;
+            }
+        }
+        function reset() {
+            document.getElementById('img1').classList.remove('hidden', 'large');
+            document.getElementById('img2').classList.remove('hidden', 'large');
+            document.getElementById('controls').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
